@@ -47,10 +47,10 @@
       "url": "https://github.com/RikkaApps/Shizuku/releases/download/v13.6.0/shizuku-v13.6.0.r1086.2650830c-release.apk",
       "filename": "shizuku-v13.6.0.r1086.2650830c-release.apk",
       "size_bytes": 2571773,
-      "sha256": null,
+      "sha256": "6e273ab0e991c4e79bc8b1bbb9b9dd739ccac1a8712a541a214078886b7b790f",
       "license": "Apache-2.0",
       "source": "https://github.com/RikkaApps/Shizuku",
-      "notes": "GitHub release API did not provide a SHA-256 digest. Listed as official upstream link; fetch helper reports unverified checksum."
+      "notes": "SHA-256 measured from official GitHub release APK during successful 2026-11-06 toolkit workflow; upstream release API omits digest."
     },
     {
       "id": "shizukuplus",
