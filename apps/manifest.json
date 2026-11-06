@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-06",
+  "device": {
+    "model": "HONOR BSN-AN00",
+    "android": "16",
+    "kernel": "6.12.58-android16-6-g3a7ac1674240-abogki541502914-4k",
+    "bootloader": "locked"
+  },
+  "upstream": {
+    "repository": "https://github.com/woshigenm/CVE-2026-98260",
+    "tag": "v1.4.5-app",
+    "license": "MIT"
+  },
+  "apps": [
+    {
+      "id": "root-app",
+      "name": "CVE-2026-98260 Root App",
+      "version": "v1.4.5-app",
+      "package": "com.rootcve.cve98260",
+      "required_for": "temporary-root",
+      "url": "https://github.com/woshigenm/CVE-2026-98260/releases/download/v1.4.5-app/CVE98260Root.apk",
+      "filename": "CVE98260Root.apk",
+      "size_bytes": 107508,
+      "sha256": "5eef25346d30e4941fd15accbfae2ab2810eca33d7c681d06f647dccd8d3a0ab",
+      "license": "MIT",
+      "source": "https://github.com/woshigenm/CVE-2026-98260"
+    },
+    {
+      "id": "kernelsu",
+      "name": "KernelSU Manager",
+      "version": "v3.3.1",
+      "package": "me.weishu.kernelsu",
+      "required_for": "root-app-extracts-kmi-module",
+      "url": "https://github.com/tiann/KernelSU/releases/download/v3.3.1/KernelSU_v3.3.1_32680-release.apk",
+      "filename": "KernelSU_v3.3.1_32680-release.apk",
+      "sha256": "b4a059ace71de2fa65cc7f12b1c58d55fc23ab25e057ee4230ce779742abe450",
+      "license": "GPL-2.0",
+      "source": "https://github.com/tiann/KernelSU"
+    },
+    {
+      "id": "shizuku-official",
+      "name": "Shizuku (official)",
+      "version": "v13.6.0",
+      "package": "moe.shizuku.privileged.api",
+      "required_for": "shell-domain-service",
+      "url": "https://github.com/RikkaApps/Shizuku/releases/download/v13.6.0/shizuku-v13.6.0.r1086.2650830c-release.apk",
+      "filename": "shizuku-v13.6.0.r1086.2650830c-release.apk",
+      "size_bytes": 2571773,
+      "sha256": null,
+      "license": "Apache-2.0",
+      "source": "https://github.com/RikkaApps/Shizuku",
+      "notes": "GitHub release API did not provide a SHA-256 digest. Listed as official upstream link; fetch helper reports unverified checksum."
+    },
+    {
+      "id": "shizukuplus",
+      "name": "Shizuku+ Drop-In (alternative with boot automation)",
+      "version": "v13.6.0.r2551",
+      "package": "moe.shizuku.privileged.api",
+      "required_for": "optional-auto-shizuku",
+      "url": "https://github.com/thejaustin/ShizukuPlus/releases/download/v13.6.0.r2551/Shizuku%2B-Drop-In-v13.6.0.r2551.apk",
+      "filename": "ShizukuPlus-Drop-In-v13.6.0.r2551.apk",
+      "size_bytes": 8420046,
+      "sha256": "ff76210230104cf449c00af19f78793e0d7454131aeacc483e6aba47eef5a0bb",
+      "license": "Apache-2.0",
+      "source": "https://github.com/thejaustin/ShizukuPlus",
+      "notes": "Alternative to official Shizuku, not a simultaneous second instance; different signing certificates may require a separate migration."
+    },
+    {
+      "id": "kernelsu-next",
+      "name": "KernelSU Next Manager",
+      "version": "v3.4.2",
+      "package": "com.rifsxd.ksunext",
+      "required_for": "optional-alternative-manager",
+      "url": "https://github.com/KernelSU-Next/KernelSU-Next/releases/download/v3.4.2/KernelSU_Next_v3.4.2_33355-release.apk",
+      "filename": "KernelSU_Next_v3.4.2_33355-release.apk",
+      "size_bytes": 16682167,
+      "sha256": "774a5511f7034a4930e881114e202319cbdc34c5aaaa5c7c6b6d2902364e4c58",
+      "license": "GPL-2.0",
+      "source": "https://github.com/KernelSU-Next/KernelSU-Next",
+      "notes": "Does not replace me.weishu.kernelsu as the currently verified module source for this Root App."
+    }
+  ]
+}
