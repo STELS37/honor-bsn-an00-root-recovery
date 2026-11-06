@@ -1,0 +1,6 @@
+dist/
+*.apk
+*.part
+*.log
+__pycache__/
+.DS_Store
