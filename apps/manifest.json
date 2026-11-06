@@ -79,6 +79,20 @@
       "license": "GPL-2.0",
       "source": "https://github.com/KernelSU-Next/KernelSU-Next",
       "notes": "Does not replace me.weishu.kernelsu as the currently verified module source for this Root App."
+    },
+    {
+      "id": "ashell-you",
+      "name": "aShell You",
+      "version": "v7.4.0",
+      "package": "in.hridayan.ashell",
+      "required_for": "optional-one-tap-quick-settings-tile",
+      "url": "https://github.com/DP-Hridayan/aShellYou/releases/download/v7.4.0/aShellYou-v7.4.0-github-release.apk",
+      "filename": "aShellYou-v7.4.0-github-release.apk",
+      "size_bytes": 13156722,
+      "sha256": "820d6a78f62b0d4b7e10ae253765ad387b3ad4bc448444dd8599ad4780c2a669",
+      "license": "GPL-3.0",
+      "source": "https://github.com/DP-Hridayan/aShellYou",
+      "notes": "Official aShell You; supports configurable Quick Settings command tiles with Shizuku / ADB."
     }
   ]
 }
