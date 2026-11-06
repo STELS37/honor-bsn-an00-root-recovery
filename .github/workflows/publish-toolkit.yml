@@ -1,0 +1,36 @@
+name: Publish version-pinned HONOR root tool kit
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retrieve upstream release APKs and verify declared checksums
+        run: python3 scripts/fetch-apps.py --profile all --dest dist/apps
+      - name: Build portable archive and manifest
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,pathlib,zipfile
+          out=pathlib.Path('dist')
+          files=sorted((out/'apps').glob('*.apk'))
+          checks={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+          (out/'SHA256SUMS.json').write_text(json.dumps(checks,indent=2)+'\n')
+          with zipfile.ZipFile(out/'honor-bsn-an00-root-kit.zip','w',compression=zipfile.ZIP_DEFLATED) as z:
+              for p in files:
+                  z.write(p,'apps/'+p.name)
+              for path in ('apps/manifest.json','README.md','docs/BOOT-RECOVERY.md','docs/ROOT-CHAIN.md','scripts/restore-root.sh','scripts/readonly-check.sh','dist/SHA256SUMS.json'):
+                  z.write(path,path.removeprefix('dist/'))
+          print(f'Bundled {len(files)} APKs; SHA-256 manifest saved')
+          PY
+      - name: Publish public release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view v0.1.0 && gh release upload v0.1.0 dist/honor-bsn-an00-root-kit.zip dist/SHA256SUMS.json --clobber ||
+          gh release create v0.1.0 dist/honor-bsn-an00-root-kit.zip dist/SHA256SUMS.json --title "HONOR BSN-AN00 root toolkit v0.1.0" --notes "Pinned original upstream APKs with SHA-256 manifest. Includes Shizuku and Shizuku+ Drop-In as mutually exclusive alternatives. Restore root after reboot using Shizuku and the upstream app."
