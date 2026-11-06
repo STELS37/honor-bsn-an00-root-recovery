@@ -43,7 +43,7 @@
 ## Приложения и исходники
 
 - [apps/manifest.json](apps/manifest.json) — закреплённые версии и SHA-256 официальных Android-приложений.
-- [scripts/fetch_apps.py](scripts/fetch_apps.py) — загрузчик **официальных релизов** с проверкой SHA-256. Никаких изменённых сторонних APK.
+- Официальные APK и опубликованные SHA-256 перечислены в [манифесте приложений](apps/manifest.json).
 - [docs/ROOT-CHAIN.md](docs/ROOT-CHAIN.md) — техническая логика и признаки успеха.
 - [docs/BOOT-RECOVERY.md](docs/BOOT-RECOVERY.md) — план восстановления и проверочные условия.
 - [scripts/readonly-check.sh](scripts/readonly-check.sh) — диагностика `id`, модели, версии ядра и загрузки LKM (не вызывает эксплуатацию).
