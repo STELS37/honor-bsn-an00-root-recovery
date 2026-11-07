@@ -25,7 +25,9 @@ if grep -q '^kernelsu ' /proc/modules 2>/dev/null; then
         printf 'ROOT_RESTORE=already_active\n'
         exit 0
     fi
-    printf 'KERNELSU_MODULE=loaded_but_su_unavailable; using upstream recovery path\n'
+    # The module is already in the running kernel. A second UAF chain here
+    # would target the same boot and is not a userspace-repair mechanism.
+    die "kernelsu_loaded_but_su_unavailable:inspect_kernelsu_userspace"
 fi
 
 [ -f "$D/run.sh" ] || die "assets_missing:open_root_app_and_deploy_assets"
@@ -49,10 +51,20 @@ unlock() { rmdir "$lock" 2>/dev/null || true; }
 printf 'ROOT_RESTORE=starting_upstream_run_sh\n'
 sh "$D/run.sh" "$D/libmagicroot.so"
 rc=$?
-if [ "$rc" -eq 0 ]; then
-    printf 'ROOT_RESTORE=upstream_done; verify_su_and_manager\n'
-else
-    printf 'ROOT_RESTORE_FAIL=upstream_exit_%s\n' "$rc" >&2
+if [ "$rc" -ne 0 ]; then
+    # A returned failure can still leave a parked UAF worker. Keep the
+    # boot-scoped lock so an unattended callback never retries blindly.
+    printf 'ROOT_RESTORE_FAIL=upstream_exit_%s; lock_retained_same_boot\n' "$rc" >&2
+    exit "$rc"
 fi
+if ! grep -q '^kernelsu ' /proc/modules 2>/dev/null; then
+    die "upstream_returned_without_kernelsu:lock_retained_same_boot"
+fi
+out=$(su -c id 2>&1)
+if [ "$?" -ne 0 ] || ! printf '%s\n' "$out" | grep -q 'uid=0'; then
+    die "upstream_returned_without_root_su:lock_retained_same_boot"
+fi
+printf '%s\n' "$out"
+printf 'ROOT_RESTORE=verified_kernelsu_and_uid0\n'
 unlock
-exit "$rc"
+exit 0
